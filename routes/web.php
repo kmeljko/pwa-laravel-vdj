@@ -35,14 +35,22 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::resource('proizvodi', \App\Http\Controllers\Admin\ProizvodController::class);
-    Route::resource('recepti', \App\Http\Controllers\Admin\ReceptController::class);
-    Route::resource('blog', \App\Http\Controllers\Admin\BlogController::class);
-});
+
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->group(function () {
-    Route::resource('proizvodi', \App\Http\Controllers\Admin\ProizvodController::class);
+     Route::resource('proizvodi', App\Http\Controllers\Admin\ProizvodController::class)
+        ->parameters(['proizvodi' => 'proizvod'])
+        ->names('proizvodi');
+});
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->group(function () {
+    Route::resource('recepti', App\Http\Controllers\Admin\ReceptController::class)
+        ->parameters(['recepti' => 'recept'])
+        ->names('recepti');
+
+});
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->group(function () {
+    Route::resource('blog', App\Http\Controllers\Admin\BlogController::class);
+    // ... ostale rute za admin, npr. proizvodi, recepti ...
 });
 
 

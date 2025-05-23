@@ -3,63 +3,55 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Recept;
 use Illuminate\Http\Request;
 
 class ReceptController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $recepti = Recept::all();
+        return view('admin.recepti.index', compact('recepti'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('admin.recepti.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'naziv' => 'required|string|max:100',
+            'opis' => 'required|string',
+        ]);
+
+        Recept::create($validated);
+
+        return redirect()->route('admin.recepti.index')->with('success', 'Recept je dodat.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function edit(Recept $recept)
     {
-        //
+        return view('admin.recepti.edit', compact('recept'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function update(Request $request, Recept $recept)
     {
-        //
+        $validated = $request->validate([
+            'naziv' => 'required|string|max:100',
+            'opis' => 'required|string',
+        ]);
+
+        $recept->update($validated);
+
+        return redirect()->route('admin.recepti.index')->with('success', 'Recept je ažuriran.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function destroy(Recept $recept)
     {
-        //
-    }
+        $recept->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return redirect()->route('admin.recepti.index')->with('success', 'Recept je obrisan.');
     }
 }
