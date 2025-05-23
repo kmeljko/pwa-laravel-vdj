@@ -1,0 +1,18 @@
+
+git clone 
+
+composer install
+npm install
+
+cp .env.example .env
+
+php artisan migrate
+php artisan key:generate
+
+-
+
+php artisan migrate
+
+php artisan db:seed
+
+composer run dev || php artisan serve
