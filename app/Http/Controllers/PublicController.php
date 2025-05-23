@@ -2,35 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product; // ili model po tvojoj temi
-use Illuminate\Http\Request;
+use App\Models\Proizvod;
 
 class PublicController extends Controller
 {
-    public function home()
+    public function index()
     {
-        // Prikazujemo istaknute proizvode
-        $featuredProducts = Product::where('featured', true)->get();
+        // Dohvati proizvode gde je istaknuto = 1
+        $istaknutiProizvodi = Proizvod::where('istaknuto', 1)->get();
 
-        return view('public.home', compact('featuredProducts'));
+        return view('public.pocetna', compact('istaknutiProizvodi'));
     }
 
-    public function catalog()
+    public function kontakt()
     {
-        $products = Product::all();
-
-        return view('public.catalog', compact('products'));
-    }
-
-    public function productDetail($id)
-    {
-        $product = Product::findOrFail($id);
-
-        return view('public.product_detail', compact('product'));
-    }
-
-    public function contact()
-    {
-        return view('public.contact');
+        return view('public.kontakt');
     }
 }
