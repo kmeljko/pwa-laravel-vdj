@@ -67,6 +67,8 @@
     <footer class="text-center py-4 bg-light mt-5">
         <p class="mb-0">&copy; {{ date('Y') }} Pekara. Sva prava zadržana.</p>
     </footer>
+    @yield('scripts')
+
 </body>
 
 </html>

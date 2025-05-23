@@ -25,9 +25,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     // Route::resource('blog', Admin\BlogController::class);
 });
 
-Route::get('/dashboard', function () {
-    return redirect()->route('admin.dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/dashboard', [App\Http\Controllers\Admin\AdminDashboardController::class, 'index'])->name('dashboard');
+});
+
 
 
 Route::middleware('auth')->group(function () {
@@ -38,7 +39,7 @@ Route::middleware('auth')->group(function () {
 
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->group(function () {
-     Route::resource('proizvodi', App\Http\Controllers\Admin\ProizvodController::class)
+    Route::resource('proizvodi', App\Http\Controllers\Admin\ProizvodController::class)
         ->parameters(['proizvodi' => 'proizvod'])
         ->names('proizvodi');
 });
@@ -49,10 +50,15 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
 
 });
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->group(function () {
+    Route::resource('logovi', App\Http\Controllers\Admin\LogController::class);
+});
+
+
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('blog', App\Http\Controllers\Admin\BlogController::class);
     // ... ostale rute za admin, npr. proizvodi, recepti ...
 });
 
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

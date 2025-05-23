@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 class Log extends Model
 {
+    protected $table = 'logovi'; 
     protected $fillable = ['naziv', 'opis', 'po_receptu', 'slika'];
 
     public function recept()
