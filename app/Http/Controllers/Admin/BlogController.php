@@ -3,63 +3,60 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Blog;
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Prikaz liste svih blogova
     public function index()
     {
-        //
+        $blogs = Blog::latest()->paginate(10);
+        return view('admin.blogs.index', compact('blogs'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // Forma za kreiranje novog bloga
     public function create()
     {
-        //
+        return view('admin.blogs.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Čuvanje novog bloga u bazi
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'naslov' => 'required|string|max:255',
+            'sadrzaj' => 'required|string',
+        ]);
+
+        Blog::create($validated);
+
+        return redirect()->route('admin.blogs.index')->with('success', 'Blog uspešno dodat.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    // Forma za izmenu postojećeg bloga
+    public function edit(Blog $blog)
     {
-        //
+        return view('admin.blogs.edit', compact('blog'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    // Ažuriranje postojećeg bloga
+    public function update(Request $request, Blog $blog)
     {
-        //
+        $validated = $request->validate([
+            'naslov' => 'required|string|max:255',
+            'sadrzaj' => 'required|string',
+        ]);
+
+        $blog->update($validated);
+
+        return redirect()->route('admin.blogs.index')->with('success', 'Blog uspešno izmenjen.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    // Brisanje bloga
+    public function destroy(Blog $blog)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $blog->delete();
+        return redirect()->route('admin.blogs.index')->with('success', 'Blog uspešno obrisan.');
     }
 }

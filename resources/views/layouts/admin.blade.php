@@ -22,7 +22,7 @@
                     <li class="nav-item"><a href="{{ route('admin.proizvodi.index') }}" class="nav-link">Proizvodi</a></li>
                     <li class="nav-item"><a href="{{ route('admin.recepti.index') }}" class="nav-link">Recepti</a></li>
                     <li class="nav-item"><a href="{{ route('admin.logovi.index') }}" class="nav-link">Logovi</a></li>
-                    <li class="nav-item"><a href="{{ route('admin.blog.index') }}" class="nav-link">Blog</a></li>
+                    <li class="nav-item"><a href="{{ route('admin.blogs.index') }}" class="nav-link">Blog</a></li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="adminUserDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -51,6 +51,7 @@
 
     <!-- Bootstrap Bundle JS (includes Popper) CDN -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    @yield('scripts')
 </body>
 
 </html>

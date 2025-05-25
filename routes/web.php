@@ -45,11 +45,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
     Route::resource('logovi', App\Http\Controllers\Admin\LogController::class);
 });
 
-
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->group(function () {
-    Route::resource('blog', App\Http\Controllers\Admin\BlogController::class);
-    // ... ostale rute za admin, npr. proizvodi, recepti ...
+    Route::resource('blogs', App\Http\Controllers\Admin\BlogController::class);
 });
+
 
 
 
