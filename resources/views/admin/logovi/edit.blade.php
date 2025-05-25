@@ -3,7 +3,7 @@
 @section('content')
     <h1>Izmeni log</h1>
 
-    <form action="{{ route('admin.logovi.update', ['logovi' => $log->id]) }}" method="POST">
+    <form action="{{ route('admin.logovi.update', ['logovi' => $log->id]) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -32,6 +32,19 @@
             <label for="opis" class="form-label">Opis</label>
             <textarea name="opis" id="opis" class="form-control @error('opis') is-invalid @enderror">{{ old('opis', $log->opis) }}</textarea>
             @error('opis')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="mb-3">
+            <label for="slika" class="form-label">Slika</label>
+            @if ($log->slika)
+                <div class="mb-2">
+                    <img src="{{ asset('storage/' . $log->slika) }}" alt="Slika loga" style="max-width: 200px; max-height: 150px;">
+                </div>
+            @endif
+            <input type="file" name="slika" id="slika" class="form-control @error('slika') is-invalid @enderror" accept="image/*">
+            @error('slika')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>
