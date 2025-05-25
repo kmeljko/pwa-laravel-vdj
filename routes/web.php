@@ -15,19 +15,11 @@ Route::get('/proizvodi/{id}', [ProizvodController::class, 'show'])->name('proizv
 //     return view('welcome');
 // });
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('dashboard');
-
-    // Ostale admin rute, npr:
-    // Route::resource('proizvodi', Admin\ProizvodController::class);
-    // Route::resource('recepti', Admin\ReceptController::class);
-    // Route::resource('blog', Admin\BlogController::class);
-});
-
-Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\Admin\AdminDashboardController::class, 'index'])->name('dashboard');
 });
+
+Route::get('/dashboard', fn () => redirect()->route('admin.dashboard'))->name('dashboard');
+
 
 
 

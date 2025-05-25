@@ -3,7 +3,7 @@
 @section('content')
     <h1>Izmeni log</h1>
 
-    <form action="/admin/logovi/{{ $log->id }}" method="POST">
+    <form action="{{ route('admin.logovi.update', ['logovi' => $log->id]) }}" method="POST">
         @csrf
         @method('PUT')
 

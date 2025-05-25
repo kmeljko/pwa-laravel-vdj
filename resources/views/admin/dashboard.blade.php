@@ -7,7 +7,7 @@
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
     <script type="text/javascript">
-        google.charts.load('current', {'packages':['corechart', 'piechart']});
+        google.charts.load('current', { 'packages': ['corechart', 'piechart'] });
         google.charts.setOnLoadCallback(drawChart);
 
         function drawChart() {
@@ -17,9 +17,10 @@
 
             recipeData.addRows([
                 @foreach ($logs_by_recipe as $row)
-                    ['{{ $row->po_receptu }}', {{ $row->total_logs }}],
+                    ['{{ $row['naziv_recepta'] }}', {{ $row['total_logs'] }}],
+
                 @endforeach
-            ]);
+                ]);
 
             var recipeOptions = {
                 title: 'Distribucija logova prema po_receptu',

@@ -32,8 +32,7 @@ class LogController extends Controller
 
         return redirect()->route('admin.logovi.index')->with('success', 'Log uspešno dodat.');
     }
-
-    public function update(Request $request, Log $log)
+    public function update(Request $request, Log $logovi)
     {
         $validated = $request->validate([
             'naziv' => 'required|string|max:255',
@@ -41,10 +40,11 @@ class LogController extends Controller
             'opis' => 'nullable|string|max:1000',
         ]);
 
-        $log->update($validated);
+        $logovi->update($validated);
 
         return redirect()->route('admin.logovi.index')->with('success', 'Log uspešno izmenjen.');
     }
+
 
 
     public function show(Log $log)
@@ -52,15 +52,16 @@ class LogController extends Controller
         return view('admin.logovi.show', compact('log'));
     }
 
-    public function edit(Log $log)
+    public function edit(Log $logovi)
     {
         $recepti = Recept::all();
-        return view('admin.logovi.edit', compact('log', 'recepti'));
+
+        return view('admin.logovi.edit', ['log' => $logovi, 'recepti' => $recepti]);
     }
 
-    public function destroy(Log $log)
+    public function destroy(Log $logovi)
     {
-        $log->delete();
+        $logovi->delete();
         return redirect()->route('admin.logovi.index')->with('success', 'Log uspešno obrisan.');
     }
 
